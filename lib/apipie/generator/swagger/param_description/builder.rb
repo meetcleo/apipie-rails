@@ -98,8 +98,8 @@ class Apipie::Generator::Swagger::ParamDescription::Builder
   def warn_optional_without_default_value(definition)
     if !required? && !definition.key?(:default)
       method_id =
-        if @param_description.is_a?(Apipie::ResponseDescriptionAdapter::PropDesc)
-          @controller_method
+        if @controller_method.present? && @param_description.is_a?(Apipie::ResponseDescriptionAdapter::PropDesc)
+          @controller_method.method_name
         else
           Apipie::Generator::Swagger::MethodDescription::Decorator.new(@controller_method).ruby_name
         end
